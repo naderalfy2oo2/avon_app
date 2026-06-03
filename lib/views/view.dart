@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'home/pages/categories.dart';
 import 'home/pages/home.dart';
 import 'home/pages/my_cart.dart';
-import 'home/pages/profile.dart';
+import 'home/pages/profile/view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});

@@ -1,6 +1,11 @@
 import 'package:avon_app/views/auth/forget_password.dart';
 import 'package:avon_app/views/auth/login.dart';
 import 'package:avon_app/views/auth/new_password.dart';
+import 'package:avon_app/views/auth/otp.dart';
+import 'package:avon_app/views/check_out.dart';
+import 'package:avon_app/views/home/pages/profile/view.dart';
+import 'package:avon_app/views/on_boarding.dart';
+import 'package:avon_app/views/splash.dart';
 import 'package:avon_app/views/view.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +29,17 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Montserrat',
 
         filledButtonTheme: FilledButtonThemeData(
-          style: FilledButton.styleFrom(fixedSize: Size.fromHeight(65)),
+          style: FilledButton.styleFrom(
+            fixedSize: Size.fromHeight(65),
+            backgroundColor: Color(0xff434C6D),
+          ),
+        ),
+
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(foregroundColor: Color(0xff434C6D)),
+        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: Color(0xff434C6D),
         ),
 
         appBarTheme: AppBarTheme(
@@ -64,11 +79,11 @@ class MyApp extends StatelessWidget {
         ),
 
         colorScheme: .fromSeed(seedColor: Color(0xffD75D72)),
-        useMaterial3: true,
+
         scaffoldBackgroundColor: Color(0xffD9D9D9),
       ),
       navigatorKey: navKey,
-      home: NewPasswordView(),
+      home: SplashView(),
     );
   }
 }

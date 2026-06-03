@@ -1,3 +1,5 @@
+import 'package:avon_app/core/components/helper_methods.dart';
+import 'package:avon_app/views/auth/otp.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/components/app_button.dart';
@@ -47,7 +49,12 @@ class CreateAccountView extends StatelessWidget {
 
               SizedBox(height: 44),
 
-              AppButton(text: 'Next'),
+              AppButton(
+                text: 'Next',
+                onPressed: () {
+                  goTo(page: OtpView(isFormCreateAccount: true));
+                },
+              ),
             ],
           ),
         ),

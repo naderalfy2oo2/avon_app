@@ -6,6 +6,7 @@ class AppImage extends StatelessWidget {
   final String image;
   final double? width, height;
   final Color? color;
+  final bool isCircle;
   final double? bottomSpace;
   final BoxFit fit;
 
@@ -17,48 +18,55 @@ class AppImage extends StatelessWidget {
     this.color,
     this.fit = BoxFit.scaleDown,
     this.bottomSpace,
+    this.isCircle = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    final myFit = isCircle ? BoxFit.cover : fit;
     return Padding(
       padding: bottomSpace != null
           ? EdgeInsets.only(bottom: bottomSpace!)
           : EdgeInsets.zero,
       child: Builder(
         builder: (context) {
+          Widget child;
           if (image.toLowerCase().endsWith('.svg')) {
-            return SvgPicture.asset(
+            child = SvgPicture.asset(
               'assets/icons/$image',
               color: color,
               width: width,
               height: height,
-              fit: fit,
+              fit: myFit,
             );
           } else if (image.startsWith('http')) {
-            return Image.network(
+            child = Image.network(
               image,
               width: width,
               height: height,
               color: color,
-              fit: fit,
+              fit: myFit,
             );
           } else if (image.endsWith('json')) {
-            return Lottie.asset(
+            child = Lottie.asset(
               "assets/lotties/$image",
 
               width: width,
               height: height,
-              fit: fit,
+              fit: myFit,
+            );
+          } else {
+            child = Image.asset(
+              'assets/images/$image',
+              color: color,
+              width: width,
+              height: height,
+              fit: myFit,
             );
           }
-          return Image.asset(
-            'assets/images/$image',
-            color: color,
-            width: width,
-            height: height,
-            fit: fit,
-          );
+
+          if (isCircle) return ClipOval(child: child);
+          return child;
         },
       ),
     );

@@ -9,11 +9,14 @@ environment:
   sdk: ^3.11.5
 
 dependencies:
+  animate_do: ^5.1.0
+  circular_countdown_timer: ^0.2.4
   cupertino_icons: ^1.0.8
   flutter:
     sdk: flutter
   flutter_svg: ^2.3.0
   lottie: ^3.3.3
+  pin_code_fields: ^9.4.0
 
 dev_dependencies:
   flutter_lints: ^6.0.0
