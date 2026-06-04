@@ -2,6 +2,9 @@ import 'package:avon_app/core/components/app_image.dart';
 import 'package:flutter/material.dart';
 
 class AppInput extends StatefulWidget {
+  final void Function(int value)? onCountryCodeChanged;
+  final String? Function(String?)? validator;
+  final TextEditingController? controller;
   final String? suffixIcon, hint, label;
   final bool withCountryCode, isPassword;
   final double? bottomSpace;
@@ -13,6 +16,9 @@ class AppInput extends StatefulWidget {
     this.withCountryCode = false,
     this.isPassword = false,
     this.bottomSpace,
+    this.controller,
+    this.onCountryCodeChanged,
+    this.validator,
   });
 
   @override
@@ -29,6 +35,8 @@ class _AppInputState extends State<AppInput> {
     // TODO: implement initState
     super.initState();
     SelectedcountryCode = list.first;
+
+    widget.onCountryCodeChanged?.call(SelectedcountryCode);
   }
 
   @override
@@ -36,6 +44,7 @@ class _AppInputState extends State<AppInput> {
     return Padding(
       padding: EdgeInsets.only(bottom: widget.bottomSpace ?? 16),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (widget.withCountryCode)
             Padding(
@@ -65,8 +74,14 @@ class _AppInputState extends State<AppInput> {
                   items: list
                       .map((e) => DropdownMenuItem(value: e, child: Text('$e')))
                       .toList(),
+
                   onChanged: (value) {
-                    SelectedcountryCode = value!;
+                    if (value == null) return;
+
+                    SelectedcountryCode = value;
+
+                    widget.onCountryCodeChanged?.call(value);
+
                     setState(() {});
                   },
                 ),
@@ -74,6 +89,8 @@ class _AppInputState extends State<AppInput> {
             ),
           Expanded(
             child: TextFormField(
+              validator: widget.validator,
+              controller: widget.controller,
               obscureText: widget.isPassword && isHidden,
               decoration: InputDecoration(
                 hintText: widget.hint,

@@ -8,11 +8,16 @@ import 'package:avon_app/views/on_boarding.dart';
 import 'package:avon_app/views/splash.dart';
 import 'package:avon_app/views/view.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/components/helper_methods.dart';
 import 'views/auth/create_account.dart';
 
-void main() {
+late SharedPreferences prefs;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  prefs = await SharedPreferences.getInstance();
   runApp(const MyApp());
 }
 

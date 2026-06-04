@@ -2,12 +2,53 @@ import 'package:avon_app/core/components/app_Back.dart';
 import 'package:avon_app/core/components/app_button.dart';
 import 'package:avon_app/core/components/app_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:map_launcher/map_launcher.dart';
 
 class CheckOutView extends StatelessWidget {
+  openMapsSheet(context) async {
+    try {
+      final coords = Coords(37.759392, -122.5107336);
+      final title = "Ocean Beach";
+      final availableMaps = await MapLauncher.installedMaps;
+
+      showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return SafeArea(
+            child: SingleChildScrollView(
+              child: Container(
+                child: Wrap(
+                  children: <Widget>[
+                    for (var map in availableMaps)
+                      ListTile(
+                        onTap: () =>
+                            map.showMarker(coords: coords, title: title),
+                        title: Text(map.mapName),
+                        leading: SvgPicture.asset(
+                          map.icon,
+                          height: 30.0,
+                          width: 30.0,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
+
   const CheckOutView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final position = LatLng(31.0351916, 31.3422139);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -32,7 +73,33 @@ class CheckOutView extends StatelessWidget {
                 _Tile(
                   title: 'Home',
                   subTitle: 'Mansoura, 14 Porsaid St',
-                  leading: Container(color: Colors.red, height: 60, width: 97),
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: SizedBox(
+                      child: GestureDetector(
+                        onTap: () => openMapsSheet(context),
+                        child: AbsorbPointer(
+                          absorbing: true,
+                          child: GoogleMap(
+                            markers: {
+                              Marker(
+                                markerId: MarkerId('applications'),
+                                position: position,
+                              ),
+                            },
+                            initialCameraPosition: CameraPosition(
+                              target: position,
+                              zoom: 16,
+                            ),
+                            myLocationButtonEnabled: false,
+                            liteModeEnabled: true,
+                          ),
+                        ),
+                      ),
+                      height: 60,
+                      width: 97,
+                    ),
+                  ),
                 ),
 
                 SizedBox(height: 40),
@@ -44,50 +111,8 @@ class CheckOutView extends StatelessWidget {
                   title: '**** **** **** 0256',
                   leading: AppImage(image: 'meza.svg'),
                 ),
-
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(horizontal: 14),
-                //   child: ListTile(
-                //     contentPadding: EdgeInsets.all(12),
-                //     horizontalTitleGap: 10,
-                //     shape: RoundedRectangleBorder(
-                //       side: BorderSide(color: Color(0xff73B9BB), width: 1.5),
-                //       borderRadius: BorderRadius.circular(30),
-                //     ),
-                //     leading: AppImage(image: 'meza.svg'),
-                //     title: Text(
-                //       '**** **** **** 0256',
-                //       style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-                //     ),
-                //     trailing: AppImage(image: 'arrow.svg'),
-                //   ),
-                // ),
                 SizedBox(height: 12),
 
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(horizontal: 14),
-                //   child: ListTile(
-                //     contentPadding: EdgeInsets.all(12),
-                //     horizontalTitleGap: 10,
-                //     shape: RoundedRectangleBorder(
-                //       side: BorderSide(color: Color(0xff73B9BB), width: 1.5),
-                //       borderRadius: BorderRadius.circular(30),
-                //     ),
-                //     leading: AppImage(image: 'voucher.svg'),
-                //     title: Text(
-                //       'Add vaucher',
-                //       style: TextStyle(
-                //         fontSize: 12,
-                //         fontWeight: FontWeight.w600,
-                //         color: Color(0xff434C6D),
-                //       ),
-                //     ),
-                //     trailing: Padding(
-                //       padding: const EdgeInsets.symmetric(vertical: 12),
-                //       child: AppButton(text: 'Apply'),
-                //     ),
-                //   ),
-                // ),
                 _Tile(
                   title: 'Add vaucher',
                   leading: AppImage(image: 'voucher.svg'),

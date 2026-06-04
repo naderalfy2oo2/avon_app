@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:avon_app/core/components/app_image.dart';
 import 'package:avon_app/core/components/helper_methods.dart';
+import 'package:avon_app/main.dart';
 import 'package:avon_app/views/on_boarding.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,7 @@ class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     super.initState();
+    bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
 
     Future.delayed(const Duration(seconds: 2), () {
       if (mounted) {

@@ -1,6 +1,7 @@
 import 'package:avon_app/core/components/app_button.dart';
 import 'package:avon_app/core/components/app_image.dart';
 import 'package:avon_app/core/components/helper_methods.dart';
+import 'package:avon_app/main.dart';
 import 'package:avon_app/views/auth/login.dart';
 import 'package:flutter/material.dart';
 
@@ -35,6 +36,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   int currentIndex = 0;
 
   void goToLogin() {
+    prefs.setBool('isFirstTime', false);
     goTo(page: LoginView());
   }
 
