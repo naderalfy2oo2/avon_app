@@ -3,8 +3,10 @@ import 'package:avon_app/core/components/app_image.dart';
 import 'package:avon_app/core/components/app_input.dart';
 import 'package:avon_app/core/components/app_login_or_register.dart';
 import 'package:avon_app/core/components/helper_methods.dart';
+import 'package:avon_app/core/components/logic/dio_helper.dart';
 import 'package:avon_app/views/auth/forget_password.dart';
 import 'package:avon_app/views/view.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/components/logic/input_validator.dart';
@@ -23,6 +25,58 @@ class _LoginViewState extends State<LoginView> {
   final formKey = GlobalKey<FormState>();
   bool isLoginClicked = false;
 
+  Future<void> SendData() async {
+    final phone = phoneController.text.trim();
+
+    final password = passwordController.text.trim();
+    print(phone);
+    print(password);
+    print(selectedCountryCode);
+
+    final resp = await DioHelper.SendData(
+      path: "api/Auth/login",
+      data: {
+        "countryCode": selectedCountryCode,
+        "phoneNumber": phone,
+        "password": password,
+      },
+    );
+
+    if (resp.isSucess) {
+      print(resp.data);
+      showMsg('Login Sucess');
+    } else {
+      showMsg(resp.msg ?? "", isError: true);
+    }
+
+    // try {
+    //   final resp =
+    //       await Dio(
+    //         BaseOptions(
+    //           headers: {
+    //             "Accept": "application/json",
+
+    //             "Content-Type": "application/json",
+    //           },
+    //         ),
+    //       ).post(
+    //         'https://cosmatics.growfet.com/api/Auth/login',
+    //         data: {
+    //           "countryCode": selectedCountryCode,
+    //           "phoneNumber": phone,
+    //           "password": password,
+    //         },
+    //       );
+
+    //   print(resp.data);
+    //   showMsg('Login Sucess');
+    // } on DioException catch (ex) {
+    //   showMsg(ex.response?.data['message'], isError: true);
+    //   // print(ex.response?.data);
+    //   print(ex.toString());
+    // }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,8 +89,6 @@ class _LoginViewState extends State<LoginView> {
             }
           },
 
-          // autovalidateMode: isLoginClicked?
-          //  AutovalidateMode.onUserInteraction:AutovalidateMode.disabled,
           child: SingleChildScrollView(
             padding: EdgeInsets.all(14).copyWith(top: 48),
             child: Column(
@@ -97,18 +149,12 @@ class _LoginViewState extends State<LoginView> {
                 AppButton(
                   isLoading: false,
                   text: 'Login',
-                  onPressed: () {
+                  onPressed: () async {
                     isLoginClicked = true;
-                    if (formKey.currentState!.validate()) {
-                      final phone = phoneController.text.trim();
+                    if (!formKey.currentState!.validate()) return;
+                    await SendData();
 
-                      final password = passwordController.text.trim();
-                      print(phone);
-                      print(password);
-                      print(selectedCountryCode);
-                    }
-
-                    goTo(page: HomeView());
+                    // goTo(page: HomeView());
                   },
                 ),
               ],

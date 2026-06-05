@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:avon_app/core/components/app_image.dart';
+import 'package:avon_app/core/components/logic/dio_helper.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class AppInput extends StatefulWidget {
-  final void Function(int value)? onCountryCodeChanged;
+  final void Function(String value)? onCountryCodeChanged;
   final String? Function(String?)? validator;
   final TextEditingController? controller;
   final String? suffixIcon, hint, label;
@@ -26,17 +30,29 @@ class AppInput extends StatefulWidget {
 }
 
 class _AppInputState extends State<AppInput> {
-  late int SelectedcountryCode;
-  final list = [10, 20, 30];
+  List<CountryModel>? list;
+  Future<void> getData() async {
+    final resp = await Dio().get('https://cosmatics.growfet.com/api/Countries');
+
+    list = CountriesData.fromJson({"list": resp.data}).list;
+    print(resp.data);
+
+    SelectedcountryCode = list!.first.code;
+
+    widget.onCountryCodeChanged?.call(SelectedcountryCode);
+    setState(() {});
+  }
+
+  late String SelectedcountryCode;
+
   bool isHidden = true;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    SelectedcountryCode = list.first;
 
-    widget.onCountryCodeChanged?.call(SelectedcountryCode);
+    getData();
   }
 
   @override
@@ -58,33 +74,43 @@ class _AppInputState extends State<AppInput> {
                   ),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: DropdownButton<int>(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 3),
-                  value: SelectedcountryCode,
-                  icon: Padding(
-                    padding: const EdgeInsetsDirectional.only(start: 8),
-                    child: AppImage(
-                      image: 'down.svg',
-                      height: 6,
-                      width: 8,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
+                child: list == null
+                    ? CircularProgressIndicator()
+                    : DropdownButton<String>(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 3,
+                        ),
+                        value: SelectedcountryCode,
+                        icon: Padding(
+                          padding: const EdgeInsetsDirectional.only(start: 8),
+                          child: AppImage(
+                            image: 'down.svg',
+                            height: 6,
+                            width: 8,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
 
-                  items: list
-                      .map((e) => DropdownMenuItem(value: e, child: Text('$e')))
-                      .toList(),
+                        items: list!
+                            .map(
+                              (e) => DropdownMenuItem(
+                                value: e.code,
+                                child: Text('${e.code}'),
+                              ),
+                            )
+                            .toList(),
 
-                  onChanged: (value) {
-                    if (value == null) return;
+                        onChanged: (value) {
+                          if (value == null) return;
 
-                    SelectedcountryCode = value;
+                          SelectedcountryCode = value;
 
-                    widget.onCountryCodeChanged?.call(value);
+                          widget.onCountryCodeChanged?.call(value);
 
-                    setState(() {});
-                  },
-                ),
+                          setState(() {});
+                        },
+                      ),
               ),
             ),
           Expanded(
@@ -117,5 +143,27 @@ class _AppInputState extends State<AppInput> {
         ],
       ),
     );
+  }
+}
+
+class CountriesData {
+  late final List<CountryModel> list;
+
+  CountriesData.fromJson(Map<String, dynamic> json) {
+    list = List.from(
+      json['list'] ?? [],
+    ).map((e) => CountryModel.fromJson(e)).toList();
+  }
+}
+
+class CountryModel {
+  late final num id;
+  late final String code;
+  late final String name;
+
+  CountryModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'] ?? 0;
+    code = json['code'] ?? "";
+    name = json['name_en'] ?? "";
   }
 }

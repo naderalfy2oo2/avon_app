@@ -10,8 +10,10 @@ environment:
 
 dependencies:
   animate_do: ^5.1.0
+  carousel_slider: ^5.1.2
   circular_countdown_timer: ^0.2.4
   cupertino_icons: ^1.0.8
+  dio: ^5.9.2
   flutter:
     sdk: flutter
   flutter_svg: ^2.3.0
