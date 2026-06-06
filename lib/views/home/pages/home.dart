@@ -76,7 +76,7 @@ class _Item extends StatelessWidget {
                   right: 8,
                   child: GestureDetector(
                     onTap: () {
-                      // add to cart
+                     
                     },
                     child: Container(
                       width: 32,
