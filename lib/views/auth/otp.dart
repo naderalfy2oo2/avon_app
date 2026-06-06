@@ -146,19 +146,7 @@ class _OtpViewState extends State<OtpView> {
                 AppButton(
                   text: 'Done',
 
-                  // onPressed: () {
-                  //   if (widget.isFormCreateAccount) {
-                  //     showDialog(
-                  //       context: context,
-                  //       builder: (context) => SucessDialogView(
-                  //         isFormCreateAccount: widget.isFormCreateAccount,
-                  //       ),
-                  //     );
-                  //   } else {
-                  //     goTo(page: NewPasswordView());
-                  //   }
-
-                  // },
+               
                   onPressed: () async {
                     if (await sendData()) {
                       if (widget.isFormCreateAccount) {
