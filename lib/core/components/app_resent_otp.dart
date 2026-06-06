@@ -43,8 +43,6 @@ class _AppResentOtpState extends State<AppResentOtp> {
             textFormat: CountdownTextFormat.MM_SS,
             textStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
           ),
-
-        // Text('0:36'),
       ],
     );
   }

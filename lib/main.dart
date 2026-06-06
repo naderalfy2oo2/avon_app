@@ -4,6 +4,7 @@ import 'package:avon_app/views/auth/new_password.dart';
 import 'package:avon_app/views/auth/otp.dart';
 import 'package:avon_app/views/check_out.dart';
 import 'package:avon_app/views/home/pages/categories.dart';
+import 'package:avon_app/views/home/pages/home.dart';
 import 'package:avon_app/views/home/pages/profile/view.dart';
 import 'package:avon_app/views/on_boarding.dart';
 import 'package:avon_app/views/splash.dart';
@@ -89,7 +90,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Color(0xffD9D9D9),
       ),
       navigatorKey: navKey,
-      home: LoginView(),
+      home: CreateAccountView(),
     );
   }
 }

@@ -2,8 +2,9 @@ import 'package:dio/dio.dart';
 
 class DioHelper {
   static const baseURL = "https://cosmatics.growfet.com/";
+  static String? token;
 
-  static Future<CustomResponse> getData({String path = ""}) async {
+  static Future<CustomResponse> getData(String s, {String path = ""}) async {
     try {
       final resp = await Dio(
         BaseOptions(
@@ -11,6 +12,8 @@ class DioHelper {
           headers: {
             "accept": "application/json",
             "Contact_type": "application/json",
+
+            "Authorization": "Bearer $token",
           },
         ),
       ).get(path);

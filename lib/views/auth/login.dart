@@ -6,7 +6,7 @@ import 'package:avon_app/core/components/helper_methods.dart';
 import 'package:avon_app/core/components/logic/dio_helper.dart';
 import 'package:avon_app/views/auth/forget_password.dart';
 import 'package:avon_app/views/view.dart';
-import 'package:dio/dio.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../core/components/logic/input_validator.dart';
@@ -25,10 +25,10 @@ class _LoginViewState extends State<LoginView> {
   final formKey = GlobalKey<FormState>();
   bool isLoginClicked = false;
 
-  Future<void> SendData() async {
+  Future<bool> SendData() async {
     final phone = phoneController.text.trim();
-
     final password = passwordController.text.trim();
+
     print(phone);
     print(password);
     print(selectedCountryCode);
@@ -44,37 +44,17 @@ class _LoginViewState extends State<LoginView> {
 
     if (resp.isSucess) {
       print(resp.data);
-      showMsg('Login Sucess');
+
+      DioHelper.token = resp.data!["token"];
+
+      print("TOKEN = ${DioHelper.token}");
+
+      showMsg('Login Success');
+      return true;
     } else {
       showMsg(resp.msg ?? "", isError: true);
+      return false;
     }
-
-    // try {
-    //   final resp =
-    //       await Dio(
-    //         BaseOptions(
-    //           headers: {
-    //             "Accept": "application/json",
-
-    //             "Content-Type": "application/json",
-    //           },
-    //         ),
-    //       ).post(
-    //         'https://cosmatics.growfet.com/api/Auth/login',
-    //         data: {
-    //           "countryCode": selectedCountryCode,
-    //           "phoneNumber": phone,
-    //           "password": password,
-    //         },
-    //       );
-
-    //   print(resp.data);
-    //   showMsg('Login Sucess');
-    // } on DioException catch (ex) {
-    //   showMsg(ex.response?.data['message'], isError: true);
-    //   // print(ex.response?.data);
-    //   print(ex.toString());
-    // }
   }
 
   @override
@@ -152,9 +132,9 @@ class _LoginViewState extends State<LoginView> {
                   onPressed: () async {
                     isLoginClicked = true;
                     if (!formKey.currentState!.validate()) return;
-                    await SendData();
-
-                    // goTo(page: HomeView());
+                    if (await SendData()) {
+                      goTo(page: HomeView());
+                    }
                   },
                 ),
               ],

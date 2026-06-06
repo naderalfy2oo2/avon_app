@@ -60,13 +60,45 @@ class _Item extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(4),
-              child: AppImage(
-                image: model.imageUrl,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
+            child: Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(4),
+                  child: AppImage(
+                    image: model.imageUrl,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: GestureDetector(
+                    onTap: () {
+                      // add to cart
+                    },
+                    child: Container(
+                      width: 32,
+                      height: 32,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(color: Colors.black26, blurRadius: 4),
+                        ],
+                      ),
+                      child: Center(
+                        child: AppImage(
+                          image: 'basket.png',
+                          width: 16,
+                          height: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
 
@@ -136,7 +168,7 @@ class _listState extends State<_list> {
         SizedBox(height: 14),
 
         list == null
-            ? CircularProgressIndicator()
+            ? Center(child: CircularProgressIndicator())
             : GridView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class AppVerifycode extends StatelessWidget {
-  const AppVerifycode({super.key});
+  final Function(String)? onCompleted;
+
+  const AppVerifycode({super.key, this.onCompleted});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,12 @@ class AppVerifycode extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
 
         separatorBuilder: (context, index) => SizedBox(width: 12),
+
+        onCompleted: (value) {
+          if (onCompleted != null) {
+            onCompleted!(value);
+          }
+        },
       ),
     );
   }
