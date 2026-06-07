@@ -1,11 +1,12 @@
-import 'dart:math';
-
 import 'package:avon_app/core/components/app_image.dart';
 
 import 'package:avon_app/core/components/app_search.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+
+import '../../../core/components/helper_methods.dart';
+import 'my_cart.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -34,6 +35,7 @@ class HomePage extends StatelessWidget {
   }
 }
 
+//???
 class _Item extends StatelessWidget {
   final productModel model;
   const _Item({super.key, required this.model});
@@ -75,8 +77,20 @@ class _Item extends StatelessWidget {
                   top: 8,
                   right: 8,
                   child: GestureDetector(
-                    onTap: () {
-                      // add to cart
+                    onTap: () async {
+                      final res = await CartService.add(
+                        model.id.toInt(),
+                        productId: model.id.toInt(),
+                      );
+
+                      if (res.isSucess) {
+                        showMsg('Product added to cart');
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const MyCartPage()),
+                        );
+                      }
                     },
                     child: Container(
                       width: 32,
@@ -187,6 +201,7 @@ class _listState extends State<_list> {
   }
 }
 
+//???
 class _Offers extends StatefulWidget {
   const _Offers({super.key});
 
@@ -294,8 +309,6 @@ class _OffersState extends State<_Offers> {
     );
   }
 }
-
-//????????
 
 class OffersData {
   late List<OffersModel> list;

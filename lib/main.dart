@@ -90,7 +90,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Color(0xffD9D9D9),
       ),
       navigatorKey: navKey,
-      home: CreateAccountView(),
+      home: SplashView(),
     );
   }
 }

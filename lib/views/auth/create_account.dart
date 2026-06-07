@@ -27,59 +27,6 @@ class _CreateAccountViewState extends State<CreateAccountView> {
 
   bool isClicked = false;
 
-  // Future<bool> SendData() async {
-  //   final name = nameController.text.trim();
-  //   final phone = phoneController.text.trim();
-  //   final password = passwordController.text.trim();
-  //   final confirmPasswordController = TextEditingController();
-  //   final emailController = TextEditingController().text.trim();
-
-  //   final resp = await DioHelper.SendData(
-  //     path: "api/Auth/register",
-  //     data: {
-  //       "username": name,
-  //       "countryCode": selectedCountryCode,
-  //       "phoneNumber": phone,
-  //        "email":emailController,
-
-  //       "password": password,
-  //     },
-  //   );
-
-  //   print(resp.msg);
-
-  //   if (resp.isSucess) {
-  //     showMsg("Account created successfully");
-  //     return true;
-  //   } else {
-  //     showMsg(resp.msg ?? "Error", isError: true);
-  //     return false;
-  //   }
-  // }
-  //????
-  // Future<bool> sendRegister() async {
-  //   final resp = await DioHelper.SendData(
-  //     path: "api/Auth/register",
-  //     data: {
-  //       "username": nameController.text.trim(),
-  //       "countryCode": selectedCountryCode,
-  //       "phoneNumber": phoneController.text.trim(),
-  //       "email": emailController.text.trim(),
-  //       "password": passwordController.text.trim(),
-  //     },
-  //   );
-
-  //   if (resp.isSucess) {
-  //     showMsg("Account created successfully");
-  //     return true;
-  //   } else {
-  //     showMsg(resp.msg ?? "Register failed", isError: true);
-  //     return false;
-  //   }
-  // }
-
-  //????
-
   Future<bool> SendData() async {
     final resp = await DioHelper.SendData(
       path: "api/Auth/register",
@@ -92,14 +39,14 @@ class _CreateAccountViewState extends State<CreateAccountView> {
       },
     );
 
-    print("RESP DATA: ${resp.data}");
-    print("RESP MSG: ${resp.msg}");
+    print(" ${resp.data}");
+    print("${resp.msg}");
 
     if (resp.isSucess) {
-      showMsg("Account created successfully");
+      showMsg("Account Created Successfully");
       return true;
     } else {
-      showMsg(resp.msg ?? "Register failed", isError: true);
+      showMsg(resp.msg ?? "Register Failed", isError: true);
       return false;
     }
   }
@@ -157,25 +104,19 @@ class _CreateAccountViewState extends State<CreateAccountView> {
 
                 SizedBox(height: 44),
 
-                // AppButton(
-                //   text: 'Next',
-                //   onPressed: () {
-                //     goTo(page: OtpView(isFormCreateAccount: true));
-                //   },
-                // ),
                 AppButton(
                   text: 'Next',
 
                   onPressed: () async {
-                    print("PHONE = ${phoneController.text}");
-                    print("CODE = $selectedCountryCode");
+                    print("${phoneController.text}");
+                    print("$selectedCountryCode");
                     isClicked = true;
 
                     if (!formKey.currentState!.validate()) return;
 
                     if (passwordController.text !=
                         confirmPasswordController.text) {
-                      showMsg("Passwords do not match", isError: true);
+                      showMsg("Password is failed", isError: true);
                       return;
                     }
 
@@ -185,16 +126,6 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     }
 
                     if (await SendData()) {
-                      // goTo(
-                      //   page: OtpView(
-                      //     isFormCreateAccount: true,
-                      //     phoneNumber: phoneController.text.trim(),
-                      //     countryCode: selectedCountryCode,
-                      //   ),
-                      // );
-
-                      //??
-
                       goTo(
                         page: OtpView(
                           isFormCreateAccount: true,

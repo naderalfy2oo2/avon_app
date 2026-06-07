@@ -13,8 +13,7 @@ class AppVerifycode extends StatelessWidget {
         theme: MaterialPinTheme(
           shape: MaterialPinShape.outlined,
           borderRadius: BorderRadius.circular(8),
-          //filledFillColor: Colors.green,
-          //focusedBorderColor: Colors.green,
+
           cursorColor: Color(0xff10101038).withValues(alpha: .22),
           cursorHeight: 16,
           cursorWidth: 5,

@@ -30,7 +30,7 @@ class _OtpViewState extends State<OtpView> {
   final formKey = GlobalKey<FormState>();
   Future<bool> sendData() async {
     if (widget.countryCode == null || widget.phoneNumber == null) {
-      showMsg("Missing data", isError: true);
+      showMsg("Missing data otp", isError: true);
       return false;
     }
 
@@ -146,19 +146,6 @@ class _OtpViewState extends State<OtpView> {
                 AppButton(
                   text: 'Done',
 
-                  // onPressed: () {
-                  //   if (widget.isFormCreateAccount) {
-                  //     showDialog(
-                  //       context: context,
-                  //       builder: (context) => SucessDialogView(
-                  //         isFormCreateAccount: widget.isFormCreateAccount,
-                  //       ),
-                  //     );
-                  //   } else {
-                  //     goTo(page: NewPasswordView());
-                  //   }
-
-                  // },
                   onPressed: () async {
                     if (await sendData()) {
                       if (widget.isFormCreateAccount) {
@@ -169,7 +156,12 @@ class _OtpViewState extends State<OtpView> {
                           ),
                         );
                       } else {
-                        goTo(page: NewPasswordView());
+                        goTo(
+                          page: NewPasswordView(
+                            phoneNumber: widget.phoneNumber,
+                            countryCode: widget.countryCode,
+                          ),
+                        );
                       }
                     }
                   },
