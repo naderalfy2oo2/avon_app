@@ -80,6 +80,11 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                         },
                       );
                       if (resp.isSucess) {
+<<<<<<< HEAD
+=======
+                     
+
+>>>>>>> 511b064174d2158fd08de8574c1d9e02956bf5ce
                         goTo(
                           page: OtpView(
                             phoneNumber: phoneController.text.trim(),

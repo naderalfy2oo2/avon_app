@@ -27,6 +27,11 @@ class _CreateAccountViewState extends State<CreateAccountView> {
 
   bool isClicked = false;
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 511b064174d2158fd08de8574c1d9e02956bf5ce
   Future<bool> SendData() async {
     final resp = await DioHelper.SendData(
       path: "api/Auth/register",
@@ -40,7 +45,11 @@ class _CreateAccountViewState extends State<CreateAccountView> {
     );
 
     print(" ${resp.data}");
+<<<<<<< HEAD
     print("${resp.msg}");
+=======
+    print(" ${resp.msg}");
+>>>>>>> 511b064174d2158fd08de8574c1d9e02956bf5ce
 
     if (resp.isSucess) {
       showMsg("Account Created Successfully");
@@ -104,19 +113,32 @@ class _CreateAccountViewState extends State<CreateAccountView> {
 
                 SizedBox(height: 44),
 
+<<<<<<< HEAD
+=======
+                
+>>>>>>> 511b064174d2158fd08de8574c1d9e02956bf5ce
                 AppButton(
                   text: 'Next',
 
                   onPressed: () async {
+<<<<<<< HEAD
                     print("${phoneController.text}");
                     print("$selectedCountryCode");
+=======
+                    print(" ${phoneController.text}");
+                    print(" $selectedCountryCode");
+>>>>>>> 511b064174d2158fd08de8574c1d9e02956bf5ce
                     isClicked = true;
 
                     if (!formKey.currentState!.validate()) return;
 
                     if (passwordController.text !=
                         confirmPasswordController.text) {
+<<<<<<< HEAD
                       showMsg("Password is failed", isError: true);
+=======
+                      showMsg("Passwords inCorrect", isError: true);
+>>>>>>> 511b064174d2158fd08de8574c1d9e02956bf5ce
                       return;
                     }
 
@@ -126,6 +148,11 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     }
 
                     if (await SendData()) {
+<<<<<<< HEAD
+=======
+                 
+
+>>>>>>> 511b064174d2158fd08de8574c1d9e02956bf5ce
                       goTo(
                         page: OtpView(
                           isFormCreateAccount: true,

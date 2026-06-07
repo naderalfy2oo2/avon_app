@@ -77,6 +77,7 @@ class _Item extends StatelessWidget {
                   top: 8,
                   right: 8,
                   child: GestureDetector(
+<<<<<<< HEAD
                     onTap: () async {
                       final res = await CartService.add(
                         model.id.toInt(),
@@ -91,6 +92,10 @@ class _Item extends StatelessWidget {
                           MaterialPageRoute(builder: (_) => const MyCartPage()),
                         );
                       }
+=======
+                    onTap: () {
+                     
+>>>>>>> 511b064174d2158fd08de8574c1d9e02956bf5ce
                     },
                     child: Container(
                       width: 32,
