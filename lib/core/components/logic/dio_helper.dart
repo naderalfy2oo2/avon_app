@@ -59,10 +59,7 @@ class DioHelper {
 
       return CustomResponse(isSucess: true, data: resp.data);
     } on DioException catch (ex) {
-      return CustomResponse(
-        isSucess: false,
-        // msg: ex.response?.data?["message"] ?? "Error",
-      );
+      return CustomResponse(isSucess: false);
     }
   }
 
@@ -91,7 +88,6 @@ class DioHelper {
       return CustomResponse(
         isSucess: false,
 
-        // msg: ex.response?.data?["message"] ?? "Error",
         msg: (ex.response?.data is Map)
             ? ex.response?.data["message"]
             : ex.response?.data?.toString() ?? "Error",

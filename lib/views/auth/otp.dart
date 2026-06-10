@@ -146,10 +146,6 @@ class _OtpViewState extends State<OtpView> {
                 AppButton(
                   text: 'Done',
 
-<<<<<<< HEAD
-=======
-               
->>>>>>> 511b064174d2158fd08de8574c1d9e02956bf5ce
                   onPressed: () async {
                     if (await sendData()) {
                       if (widget.isFormCreateAccount) {
